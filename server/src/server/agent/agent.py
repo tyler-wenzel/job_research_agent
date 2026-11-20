@@ -1,8 +1,8 @@
 from langgraph.graph import StateGraph, START, END
-from server.state import MessagesState
-from server.model import llm_call
-from server.tool_node import tool_node
-from server.end_logic import should_continue
+from server.agent.state import MessagesState
+from server.agent.model import llm_call
+from server.agent.tool_node import tool_node
+from server.agent.end_logic import should_continue
 
 
 agent_builder = StateGraph(MessagesState)
@@ -20,7 +20,7 @@ agent = agent_builder.compile()
 
 from langchain.messages import HumanMessage
 
-messages = [HumanMessage(content="Get me a job.")]
+messages = [HumanMessage(content="find me some people in the database")]
 messages = agent.invoke({"messages": messages})
 for m in messages["messages"]:
     m.pretty_print()

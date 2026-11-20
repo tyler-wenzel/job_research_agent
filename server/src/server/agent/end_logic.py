@@ -1,6 +1,6 @@
 from typing import Literal
 from langgraph.graph import END
-from server.state import MessagesState
+from server.agent.state import MessagesState
 
 
 def should_continue(state: MessagesState) -> Literal["tool_node", END]:
