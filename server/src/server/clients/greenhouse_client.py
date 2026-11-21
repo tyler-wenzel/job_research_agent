@@ -1,7 +1,7 @@
 import requests
 
 
-class PeopleClient:
+class GreenhouseClient:
     def __init__(self):
         self.base_url = "https://boards-api.greenhouse.io"
 
