@@ -7,15 +7,20 @@ model = init_chat_model("claude-sonnet-4-6")
 
 
 @tool
-def get_people_from_company(company_name: str, limit: int) -> str:
-    """Fetch the people designated number of people from a company.
+def get_people_from_company(
+    company_name: str, job_titles: list[str], limit: int
+) -> str:
+    """Fetch people with the given job titles at a company, including their emails.
 
     Args:
-        company_name: The name of the company
+        company_name: The company website or name, such as google.com
+        job_titles: Job titles to search for
         limit: The number of people to fetch
     """
     return json.dumps(
-        PeopleService().get_people_from_company(company_name=company_name, limit=limit)
+        PeopleService().get_people_from_company(
+            company_name=company_name, job_titles=job_titles, limit=limit
+        )
     )
 
 

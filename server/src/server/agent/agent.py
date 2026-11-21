@@ -20,7 +20,9 @@ agent = agent_builder.compile()
 
 from langchain.messages import HumanMessage
 
-messages = [HumanMessage(content="find me some people in the database")]
+messages = [
+    HumanMessage(content="find me 3 people from google who are software engineers")
+]
 messages = agent.invoke({"messages": messages})
 for m in messages["messages"]:
     m.pretty_print()
