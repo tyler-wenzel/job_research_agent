@@ -1,11 +1,11 @@
-from server.clients.greenhouse_client import GreenhouseClient
-from server.clients.supabase_client import SupabaseClient
 from server.clients.findymail_client import FindymailClient
+from server.clients.hunter_client import HunterClient, JobTitle, Seniority
+from server.clients.supabase_client import SupabaseClient
 
 
 class PeopleService:
     def __init__(self):
-        self.greenhouse_client = GreenhouseClient()
+        self.hunter_client = HunterClient()
         self.supabase_client = SupabaseClient()
         self.findymail_client = FindymailClient()
 
@@ -25,8 +25,29 @@ class PeopleService:
             for employee in employees
         ]
 
-    def get_contacts(self):
-        return self.greenhouse_client.get_contacts()
+    def get_contacts(
+        self,
+        domain: str,
+        job_title: JobTitle | None = None,
+        seniority: Seniority | None = None,
+        limit: int = 5,
+        offset: int = 0,
+    ):
+        return self.hunter_client.domain_search(
+            domain=domain,
+            job_title=job_title,
+            seniority=seniority,
+            limit=limit,
+            offset=offset,
+        )
+
+    def insert_person(self, name: str, email: str, raw_title: str, company: str):
+        return self.supabase_client.insert_person(
+            name=name,
+            email=email,
+            title=raw_title,
+            company=company,
+        ).data
 
     def query_people(self):
         return self.supabase_client.get_people().data

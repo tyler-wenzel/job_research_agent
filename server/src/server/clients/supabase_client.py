@@ -18,3 +18,18 @@ class SupabaseClient:
 
     def get_person(self, id: int):
         return self.client.table("People").select("*").eq("id", id).execute()
+
+    def insert_person(self, name: str, email: str, title: str, company: str):
+        return (
+            self.client.table("People")
+            .insert(
+                {
+                    "name": name,
+                    "email": email,
+                    "title": title,
+                    "company": company,
+                    "status": "Created",
+                }
+            )
+            .execute()
+        )

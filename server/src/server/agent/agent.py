@@ -21,7 +21,7 @@ agent = agent_builder.compile()
 from langchain.messages import HumanMessage
 
 messages = [
-    HumanMessage(content="find me 3 people from google who are software engineers")
+    HumanMessage(content="find me 3 people from stripe who are software engineers")
 ]
 messages = agent.invoke({"messages": messages})
 for m in messages["messages"]:
