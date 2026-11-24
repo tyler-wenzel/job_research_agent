@@ -3,6 +3,7 @@ from server.agent.state import MessagesState
 from server.agent.model import llm_call
 from server.agent.tool_node import tool_node
 from server.agent.end_logic import should_continue
+from langchain.messages import HumanMessage
 
 
 agent_builder = StateGraph(MessagesState)
@@ -18,10 +19,10 @@ agent_builder.add_edge("tool_node", "llm_call")
 
 agent = agent_builder.compile()
 
-from langchain.messages import HumanMessage
-
 messages = [
-    HumanMessage(content="find me 3 people from stripe who are software engineers")
+    HumanMessage(
+        content="find me 3 people from stripe who are software engineers and save them to the database"
+    )
 ]
 messages = agent.invoke({"messages": messages})
 for m in messages["messages"]:
