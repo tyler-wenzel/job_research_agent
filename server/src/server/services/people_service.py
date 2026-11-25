@@ -1,7 +1,7 @@
 from server.clients.findymail_client import FindymailClient
 from server.clients.hunter_client import HunterClient, JobTitle, Seniority
 from server.clients.supabase_client import SupabaseClient
-from server.models.person import SaveResult
+from server.models.person import SaveResult, Status
 
 
 class PeopleService:
@@ -64,5 +64,12 @@ class PeopleService:
         )
         return SaveResult(saved=True, person=person)
 
-    def query_people(self):
-        return self.supabase_client.get_people()
+    def query_people(
+        self,
+        company: str | None = None,
+        status: Status | None = None,
+    ):
+        return self.supabase_client.get_people(
+            company=company,
+            status=status,
+        )

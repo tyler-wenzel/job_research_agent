@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from supabase import Client, create_client
 
-from server.models.person import Person
+from server.models.person import Person, Status
 
 load_dotenv()
 
@@ -15,8 +15,17 @@ class SupabaseClient:
             os.environ.get("SUPABASE_SECRET_KEY"),
         )
 
-    def get_people(self):
-        rows = self.client.table("People").select("*").execute().data
+    def get_people(
+        self,
+        company: str | None = None,
+        status: Status | None = None,
+    ):
+        query = self.client.table("People").select("*")
+        if company:
+            query = query.eq("company", company)
+        if status:
+            query = query.eq("status", status)
+        rows = query.execute().data
         return [Person.model_validate(row) for row in rows]
 
     def get_person(self, id: int):

@@ -1,6 +1,7 @@
 from langchain.tools import tool
 from langchain.chat_models import init_chat_model
 from server.clients.hunter_client import JobTitle, Seniority
+from server.models.person import Status
 from server.services.people_service import PeopleService
 import json
 
@@ -54,10 +55,24 @@ def save_person(name: str, email: str, raw_title: str, company: str) -> str:
 
 
 @tool
-def query_people() -> str:
-    """Query the people saved in the database."""
+def query_people(
+    company: str | None = None,
+    status: Status | None = None,
+) -> str:
+    """Query the people saved in the database.
+
+    Args:
+        company: Company domain to match, such as stripe.com
+        status: One of Created, Contacted, Active, or Closed
+    """
     return json.dumps(
-        [person.model_dump(mode="json") for person in PeopleService().query_people()]
+        [
+            person.model_dump(mode="json")
+            for person in PeopleService().query_people(
+                company=company,
+                status=status,
+            )
+        ]
     )
 
 
