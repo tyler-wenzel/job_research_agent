@@ -28,12 +28,18 @@ class PeopleService:
 
     def get_contacts(
         self,
-        domain: str,
+        company: str,
         job_title: JobTitle | None = None,
         seniority: Seniority | None = None,
         limit: int = 5,
         offset: int = 0,
     ):
+        match = self.hunter_client.find_domain(company)
+        if not match:
+            return {"error": "no domain found", "company": company}
+
+        domain = match["domain"]
+        print(domain)
         people = self.hunter_client.domain_search(
             domain=domain,
             job_title=job_title,

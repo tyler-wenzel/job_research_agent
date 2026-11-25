@@ -21,7 +21,7 @@ agent = agent_builder.compile()
 
 messages = [
     HumanMessage(
-        content="find me 3 people from stripe who are software engineers and save them to the database"
+        content="find me 3 people from NEWITY who are product engineers and save them to the database"
     )
 ]
 messages = agent.invoke({"messages": messages})

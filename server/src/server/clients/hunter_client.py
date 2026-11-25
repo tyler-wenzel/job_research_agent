@@ -30,6 +30,22 @@ class HunterClient:
             "test-api-key" if use_test_key else os.environ.get("HUNTER_API_KEY")
         )
 
+    def find_domain(self, company: str):
+        response = requests.get(
+            f"{self.base_url}/domain-finder",
+            params={
+                "company": company,
+                "limit": 1,
+                "perfect_match": "true",
+                "api_key": self.api_key,
+            },
+        )
+        response.raise_for_status()
+        matches = response.json().get("data") or []
+        if not matches:
+            return None
+        return matches[0]
+
     def domain_search(
         self,
         domain: str,

@@ -9,7 +9,7 @@ model = init_chat_model("claude-sonnet-4-6")
 
 @tool
 def get_contacts(
-    domain: str,
+    company: str,
     job_title: JobTitle,
     seniority: Seniority,
     limit: int = 5,
@@ -18,7 +18,7 @@ def get_contacts(
     """Fetch people at a company by title and seniority, including their emails.
 
     Args:
-        domain: The company domain, such as stripe.com
+        company: The company name, such as Stripe
         job_title: One of solutions engineer, software engineer, product manager, forward deployed engineer, solutions architect, sales engineer, or ai engineer
         seniority: junior or senior, default is senior
         limit: The number of people to fetch
@@ -26,7 +26,7 @@ def get_contacts(
     """
     return json.dumps(
         PeopleService().get_contacts(
-            domain=domain,
+            company=company,
             job_title=job_title,
             seniority=seniority,
             limit=limit,
